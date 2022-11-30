@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# 섹션2. 간단한 To-Do 앱 만들며 리액트 익히기
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### create-react-app으로 실행된 리액트의 기본 구조 살펴보기
 
-## Available Scripts
+**이름을 수정하면 안되는 것!**
 
-In the project directory, you can run:
+- `public/index.html`
+- `src/index.js`
 
-### `npm start`
+**src 폴더**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 대부분의 **리액트 소스 코드**들(js, css)은 이 곳에 작성하면 된다.
+- Webpack은 **여기에 있는 파일만** 봄 → 다른 곳은 Webpack에 의해 처리되지 않음
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+**package.json**
 
-### `npm test`
+- 해당 프로젝트에 대한 정보들
+  - `name` - 프로젝트 이름
+  - `version` - 버전
+- `dependencies` - 필요한 **라이브러리**와 라이브러리의 버전
+- `scripts` - 앱을 시작할 때, 앱을 빌드할 때, 테스트할 때 사용할 **스크립트**들
+- `eslintConfig` - **문법**이나 코드 포맷을 체크해주는 것에 대한 설정
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 할 일 목록 앱 소개 및 JSX 알아보기
 
-### `npm run build`
+**JSX(javascript syntax extension)**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 자바스크립트의 확장 문법
+- **자바스크립트**와 **HTML 구조**를 **같이 사용**할 수 있기 때문에 기본 UI에 데이터가 변하는 것들이나 이벤트들이 처리되는 부분을 더욱 쉽게 구현할 수 있음
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**JSX를 사용하지 않는다면?**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. `React.createElement` API를 통해 element를 생성
+   
+   ex) `const myElement = React.createElement('h1', {}, 'not using JSX');`
 
-### `npm run eject`
+2. InMemory에 저장
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. `ReactDOM.render` 함수를 사용해 실제 웹브라우저에 그림
+   
+   ex) `ReactDOM.render(myElement, document.getElementById('root');`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**JSX는 createElement를 쉽게 사용하기 위해 사용**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- babel을 이용하면 JSX를 자동으로 createElement로 바꿔줌
+- 반드시 **부모 요소 하나**로 자식들을 감싸줘야 한다
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 클래스형 컴포넌트를 이용해 To-Do app 만들기
 
-## Learn More
+**import 할 때 중괄호 유무의 차이는?**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 참조 : [모듈 내보내고 가져오기](https://ko.javascript.info/import-export)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[모듈 내보내고 가져오기](https://ko.javascript.info/import-export)
 
-### Code Splitting
+- **export**의 종류
+  - **named export**
+    - 일반적인 export
+    - 복수의 함수가 있는 라이브러리 형태의 모듈에서 사용(함수, 클래스 등..)
+    - 모듈을 가져올 때 `{중괄호}` 필요함
+    - 내보냈을 때 사용한 이름 그대로 가져옴
+  - **default export**
+    - 기본 내보내기
+    - 모듈 내부에 **개체가 하나만 선언**되어 있다는 사실을 명확히 나타낼 때 사용
+    - 모듈을 가져올 때 **중괄호 없어도 됨**
+    - 파일당 하나만 있으므로 이 개체를 가져오려는 모듈에서는 중괄호 없이도 어떤 개체를 가져올 지 정확히 알 수 있으므로 이름이 없어도 됨(익명함수 가능)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**JSX Key 속성 이해하기**
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 요소의 리스트를 나열할 때는 Key를 넣어줘야 한다. 왜??
+- React가 **변경**, **추가** 또는 **제거된 항목**을 **식별**하는 데 도움이 됨
+- 리액트는 가상 돔을 이용해 바뀐 부분만 실제 돔에 적용함
+- 이 바뀐 부분을 인식할 때 **key를 사용**!
