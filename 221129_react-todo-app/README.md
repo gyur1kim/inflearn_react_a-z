@@ -51,8 +51,6 @@
 
 - 참조 : [모듈 내보내고 가져오기](https://ko.javascript.info/import-export)
 
-[모듈 내보내고 가져오기](https://ko.javascript.info/import-export)
-
 - **export**의 종류
   - **named export**
     - 일반적인 export
