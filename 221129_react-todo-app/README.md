@@ -52,6 +52,7 @@
 - 참조 : [모듈 내보내고 가져오기](https://ko.javascript.info/import-export)
 
 - **export**의 종류
+  
   - **named export**
     - 일반적인 export
     - 복수의 함수가 있는 라이브러리 형태의 모듈에서 사용(함수, 클래스 등..)
@@ -81,3 +82,22 @@
 - 데이터를 변경할 때는 **직접 접근하지 말 것**! `setState()`
   
   `this.setState({ 데이터 속성: 변경할 데이터 값 })`
+
+
+
+
+
+# 섹션3. To-Do 앱 최적화하기
+
+## React Hooks란 무엇인가
+
+> class 없이 state를 사용할 수 있는 새로운 기능
+
+### React Hooks가 필요한 이유
+
+1. **Class Component**와 **Functional Component**의 **비교**
+   - Class Component는 Functional Component에 비해 **코드**가 **길고**, **복잡**하며, 성능이 **더딤**
+   - 하지만 **리액트의 생명 주기**를 함수형 컴포넌트에서는 사용할 수 없었음
+     - 컴포넌트 생성 : `Mount` : (componentWillMount - render - **componentDidMount**)
+     - 컴포넌트 업데이트 : `Update` : (shouldComponentUpdate - componentWillUpdate - render - **componentDidUpdate**)
+     - 컴포넌트 제거 : `Unmount` : (**componentWillUnmount)**
