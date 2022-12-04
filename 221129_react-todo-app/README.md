@@ -83,10 +83,6 @@
   
   `this.setState({ 데이터 속성: 변경할 데이터 값 })`
 
-
-
-
-
 # 섹션3. To-Do 앱 최적화하기
 
 ## React Hooks란 무엇인가
@@ -101,3 +97,13 @@
      - 컴포넌트 생성 : `Mount` : (componentWillMount - render - **componentDidMount**)
      - 컴포넌트 업데이트 : `Update` : (shouldComponentUpdate - componentWillUpdate - render - **componentDidUpdate**)
      - 컴포넌트 제거 : `Unmount` : (**componentWillUnmount)**
+2. React 16.8 **Hooks** **업데이트**
+   - 함수형 컴포넌트에서도 리액트의 생명 주기를 사용할 수 있게 됨!
+   - 클래스형 컴포넌트에서는 생명주기를 이용할 때 `componentDidMount` , `componentDidUpdate` , `componentWillUnmount` 각각 다르게 처리해야 함
+   - 함수형 컴포넌트는 `useEffect` 하나로 다 처리할 수 있음
+3. **HOC 컴포넌트**를 **Custom React Hooks**로 대체할 수 있음
+   - **HOC : Higher Order Component**
+     - 컴포넌트를 인자로 받아서 새로운 리액트 컴포넌트를 리턴하는 함수
+     - 화면에서 재사용 가능한 로직만을 분리해 Component로 만들고, 재사용 불가능한 부분들은 parameter로 받아서 처리하는 방법
+   - React Hooks에서는 따로 **Custom Hooks**를 이용해 **Wrapper가 많아지는 일을 방지**
+4. 소스코드가 **간결**해짐
