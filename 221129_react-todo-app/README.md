@@ -107,3 +107,9 @@
      - 화면에서 재사용 가능한 로직만을 분리해 Component로 만들고, 재사용 불가능한 부분들은 parameter로 받아서 처리하는 방법
    - React Hooks에서는 따로 **Custom Hooks**를 이용해 **Wrapper가 많아지는 일을 방지**
 4. 소스코드가 **간결**해짐
+
+## 클래스 컴포넌트에서 함수 컴포넌트로 바꾸기
+
+1. `export default function App() {}`
+2. 클래스형 컴포넌트에서는 `render() { }` 안에 `return()` → 함수형 컴포넌트에서는 바로 `return()`
+3. state를 **useState Hook**를 이용해서 표현
