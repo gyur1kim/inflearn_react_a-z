@@ -1,23 +1,37 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 import "./App.css"
 
 export default function App () {
   // 컴포넌트의 렌더링 결과물에 영향을 주는 데이터를 갖고 있는 객체
-  state = {
-    todoData: [
-      {
-        id: "1",
-        title: "공부하기",
-        completed: true,
-      },
-      {
-        id: "2",
-        title: "청소하기",
-        completed: false,
-      },
-    ],
-    value: "",
-  }
+  // state = {
+  //   todoData: [
+  //     {
+  //       id: "1",
+  //       title: "공부하기",
+  //       completed: true,
+  //     },
+  //     {
+  //       id: "2",
+  //       title: "청소하기",
+  //       completed: false,
+  //     },
+  //   ],
+  //   value: "",
+  // }
+
+  //state를 useState Hook를 이용해 표현하기
+  const [todoData, setTodoData] = useState([
+    {
+      id: "1",
+      title: "공부하기",
+      completed: true,
+    },
+    {
+      id: "2",
+      title: "청소하기",
+      completed: false,
+    },
+  ]);
 
   btnStyle = {
     color: "white",
