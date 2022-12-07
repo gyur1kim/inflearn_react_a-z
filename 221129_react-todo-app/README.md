@@ -113,3 +113,7 @@
 1. `export default function App() {}`
 2. 클래스형 컴포넌트에서는 `render() { }` 안에 `return()` → 함수형 컴포넌트에서는 바로 `return()`
 3. state를 **useState Hook**를 이용해서 표현
+   - react에서 useState를 import한다
+   - `const [getter, setter] = useState('initial value')`
+   - **setter** 함수 **파라미터**의 **첫 번째 값**은 **직전 state**의 값임
+     - 기존 값을 어떻게 업데이트 할 지에 대한 함수를 등록
