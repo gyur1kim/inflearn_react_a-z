@@ -117,3 +117,18 @@
    - `const [getter, setter] = useState('initial value')`
    - **setter** 함수 **파라미터**의 **첫 번째 값**은 **직전 state**의 값임
      - 기존 값을 어떻게 업데이트 할 지에 대한 함수를 등록
+
+## State vs Props
+
+### State
+
+- **해당 컴포넌트 내부**에서 사용하는 데이터
+- state는 **변경 가능**함(`setter 함수`)
+- state가 변하면 **re-rendering**된다.
+
+### Props
+
+- properties의 줄임말
+- 상속하는 **부모 컴포넌트**로부터 **자녀 컴포넌트에 데이터를 전달**하는 방법
+- 자식에서 props를 변경해도 변하지 않음 ⇒ props는 **읽기 전용**
+- 부모 컴포넌트에서 state를 변경해야 함
