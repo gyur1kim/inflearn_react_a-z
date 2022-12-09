@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "./App.css"
+import List from './components/List'
 
 export default function App () {
   // 컴포넌트의 렌더링 결과물에 영향을 주는 데이터를 갖고 있는 객체
@@ -11,28 +12,6 @@ export default function App () {
   //state를 useState Hook를 이용해 표현하기
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
-
-  const btnStyle = {
-    color: "white",
-    border: "none",
-    padding: "5px 9px",
-    borderRadius: "50%",
-    cursor: "pointer",
-    float: "right",
-  }
-
-  const getStyle = (completed) => {
-    return {
-      padding: "10px",
-      borderBottom: "1px #ccc dotted",
-      textDecoration: completed? "line-through" : "none"
-    }
-  }
-
-  const handleDelete = (id) => {
-    let newTodoData = todoData.filter(data=> data.id !== id);
-    setTodoData(newTodoData);
-  }
 
   const handleChange = (e)=>{
     setValue(e.target.value)
@@ -49,16 +28,6 @@ export default function App () {
     setValue("");
   }
 
-  const handleCompletedChange = (id) =>{
-    let newTodoData = todoData.map(data => {
-      if (data.id === id) {
-        data.completed = !data.completed
-      }
-      return data;
-    })
-    setTodoData(newTodoData);
-  }
-
   return (
     <div className="container">
       <div className="todoBlock">
@@ -66,13 +35,8 @@ export default function App () {
           <h1>할 일 목록</h1>
         </div>
 
-        {todoData.map(data=>(
-          <div style={getStyle(data.completed)} key={data.id}>
-            <input type="checkbox" defaultChecked={data.completed} onChange={() => handleCompletedChange(data.id)}/>
-            {data.title}
-            <button style={btnStyle} onClick={()=> handleDelete(data.id)}>X</button>
-          </div>
-        ))}
+        {/* props를 이용해 todoData 내리기 */}
+        <List todoData={todoData} setTodoData={setTodoData}/>
 
         <form style={{display: 'flex'}} onSubmit={handleSubmit}>
           <input
