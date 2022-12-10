@@ -138,3 +138,11 @@
 - `src/components` 폴더 생성
 - 컴포넌트로 사용할 js파일 생성하기
 - 함수형 컴포넌트의 **shortcut** : `rsf`
+
+## 구조 분해 할당(Destructuring)
+
+- 배열이나 객체의 **속성을 해체**하여 그 값을 **개별 변수**에 담을 수 있게 하는 JavaScript **표현식**
+- *clean code*를 위해서!!!
+- 객체 구조 분해 할당 - `{}`
+- 배열 구조 분해 할당 - `[]`
+- 자세한 공부 내용 : [221210_구조분해할당.js](https://github.com/gyur1kim/inflearn_react_a-z/blob/master/221129_react-todo-app/studying/221210_%EA%B5%AC%EC%A1%B0%EB%B6%84%ED%95%B4%ED%95%A0%EB%8B%B9.js)
