@@ -146,3 +146,37 @@
 - 객체 구조 분해 할당 - `{}`
 - 배열 구조 분해 할당 - `[]`
 - 자세한 공부 내용 : [221210_구조분해할당.js](https://github.com/gyur1kim/inflearn_react_a-z/blob/master/221129_react-todo-app/studying/221210_%EA%B5%AC%EC%A1%B0%EB%B6%84%ED%95%B4%ED%95%A0%EB%8B%B9.js)
+
+- 자식 컴포넌트에서 props 객체를 받을 때, `props.property`로 데이터에 접근하는 방식보다는 `객체 구조 분해 할당`으로 받는 것이 코드가 깔끔해진다.
+
+## TailWindCSS
+
+> HTML 안에서, CSS 스타일을 만들 수 있게 해주는 **CSS 프레임워크.** CSS 프레임워크는 더 빠르게 애플리케이션을 스타일링 하는 데 도움을 준다.
+
+1. `npm install -D tailwindcss postcss autoprefixer`
+   
+   -D는 **개발 환경**에서만 사용하겠다!
+
+2. `npx tailwindcss init`
+
+3. `tailwind.config.js` 에…
+   
+   ```jsx
+   module.exports = {
+    content: [
+      ".src/**/*.{js, jsx, ts, tsx}"
+    ],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+   }
+   ```
+
+4. `App.css` 에…
+   
+   ```jsx
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   ```
