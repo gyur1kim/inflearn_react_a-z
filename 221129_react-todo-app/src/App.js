@@ -1,5 +1,5 @@
+import './App.css';
 import React, { useState } from 'react';
-import "./App.css"
 import List from './components/List'
 import Form from './components/Form'
 
@@ -14,8 +14,6 @@ export default function App () {
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
 
-
-
   const handleSubmit = (e)=>{
     e.preventDefault();
     let newTodo = {
@@ -28,9 +26,12 @@ export default function App () {
   }
 
   return (
-    <div className="container">
-      <div className="todoBlock">
-        <div className="title">
+    <div>
+      <h1 className="text-3xl font-bold underline">
+        Hello world!
+      </h1>
+      <div>
+        <div>
           <h1>할 일 목록</h1>
         </div>
 
