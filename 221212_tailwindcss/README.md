@@ -1,70 +1,182 @@
-# Getting Started with Create React App
+# 섹션2. 간단한 To-Do 앱 만들며 리액트 익히기
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## create-react-app으로 실행된 리액트의 기본 구조 살펴보기
 
-## Available Scripts
+### **이름을 수정하면 안되는 것!**
 
-In the project directory, you can run:
+- `public/index.html`
+- `src/index.js`
 
-### `npm start`
+### **src 폴더**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- 대부분의 **리액트 소스 코드**들(js, css)은 이 곳에 작성하면 된다.
+- Webpack은 **여기에 있는 파일만** 봄 → 다른 곳은 Webpack에 의해 처리되지 않음
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### **package.json**
 
-### `npm test`
+- 해당 프로젝트에 대한 정보들
+  - `name` - 프로젝트 이름
+  - `version` - 버전
+- `dependencies` - 필요한 **라이브러리**와 라이브러리의 버전
+- `scripts` - 앱을 시작할 때, 앱을 빌드할 때, 테스트할 때 사용할 **스크립트**들
+- `eslintConfig` - **문법**이나 코드 포맷을 체크해주는 것에 대한 설정
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 할 일 목록 앱 소개 및 JSX 알아보기
 
-### `npm run build`
+### **JSX(javascript syntax extension)**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 자바스크립트의 확장 문법
+- **자바스크립트**와 **HTML 구조**를 **같이 사용**할 수 있기 때문에 기본 UI에 데이터가 변하는 것들이나 이벤트들이 처리되는 부분을 더욱 쉽게 구현할 수 있음
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### **JSX를 사용하지 않는다면?**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. `React.createElement` API를 통해 element를 생성
+   
+   ex) `const myElement = React.createElement('h1', {}, 'not using JSX');`
 
-### `npm run eject`
+2. InMemory에 저장
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. `ReactDOM.render` 함수를 사용해 실제 웹브라우저에 그림
+   
+   ex) `ReactDOM.render(myElement, document.getElementById('root');`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### **JSX는 createElement를 쉽게 사용하기 위해 사용**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- babel을 이용하면 JSX를 자동으로 createElement로 바꿔줌
+- 반드시 **부모 요소 하나**로 자식들을 감싸줘야 한다
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 클래스형 컴포넌트를 이용해 To-Do app 만들기
 
-## Learn More
+### **import 할 때 중괄호 유무의 차이는?**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- 참조 : [모듈 내보내고 가져오기](https://ko.javascript.info/import-export)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **export**의 종류
+  
+  - **named export**
+    - 일반적인 export
+    - 복수의 함수가 있는 라이브러리 형태의 모듈에서 사용(함수, 클래스 등..)
+    - 모듈을 가져올 때 `{중괄호}` 필요함
+    - 내보냈을 때 사용한 이름 그대로 가져옴
+  - **default export**
+    - 기본 내보내기
+    - 모듈 내부에 **개체가 하나만 선언**되어 있다는 사실을 명확히 나타낼 때 사용
+    - 모듈을 가져올 때 **중괄호 없어도 됨**
+    - 파일당 하나만 있으므로 이 개체를 가져오려는 모듈에서는 중괄호 없이도 어떤 개체를 가져올 지 정확히 알 수 있으므로 이름이 없어도 됨(익명함수 가능)
 
-### Code Splitting
+### **JSX Key 속성 이해하기**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- 요소의 리스트를 나열할 때는 Key를 넣어줘야 한다. 왜??
+- React가 **변경**, **추가** 또는 **제거된 항목**을 **식별**하는 데 도움이 됨
+- 리액트는 가상 돔을 이용해 바뀐 부분만 실제 돔에 적용함
+- 이 바뀐 부분을 인식할 때 **key를 사용**!
 
-### Analyzing the Bundle Size
+### **ReactState**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- 컴포넌트의 **렌더링 결과물**에 **영향**을 주는 **데이터**를 갖고 있는 **객체**
 
-### Making a Progressive Web App
+- 리액트에서 데이터가 변할 때 화면을 다시 렌더링 해주기 위해선 **React State**를 사용해야 한다
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- `state = {}`
 
-### Advanced Configuration
+- 데이터를 변경할 때는 **직접 접근하지 말 것**! `setState()`
+  
+  `this.setState({ 데이터 속성: 변경할 데이터 값 })`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+# 섹션3. To-Do 앱 최적화하기
 
-### Deployment
+## React Hooks란 무엇인가
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> class 없이 state를 사용할 수 있는 새로운 기능
 
-### `npm run build` fails to minify
+### React Hooks가 필요한 이유
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. **Class Component**와 **Functional Component**의 **비교**
+   - Class Component는 Functional Component에 비해 **코드**가 **길고**, **복잡**하며, 성능이 **더딤**
+   - 하지만 **리액트의 생명 주기**를 함수형 컴포넌트에서는 사용할 수 없었음
+     - 컴포넌트 생성 : `Mount` : (componentWillMount - render - **componentDidMount**)
+     - 컴포넌트 업데이트 : `Update` : (shouldComponentUpdate - componentWillUpdate - render - **componentDidUpdate**)
+     - 컴포넌트 제거 : `Unmount` : (**componentWillUnmount)**
+2. React 16.8 **Hooks** **업데이트**
+   - 함수형 컴포넌트에서도 리액트의 생명 주기를 사용할 수 있게 됨!
+   - 클래스형 컴포넌트에서는 생명주기를 이용할 때 `componentDidMount` , `componentDidUpdate` , `componentWillUnmount` 각각 다르게 처리해야 함
+   - 함수형 컴포넌트는 `useEffect` 하나로 다 처리할 수 있음
+3. **HOC 컴포넌트**를 **Custom React Hooks**로 대체할 수 있음
+   - **HOC : Higher Order Component**
+     - 컴포넌트를 인자로 받아서 새로운 리액트 컴포넌트를 리턴하는 함수
+     - 화면에서 재사용 가능한 로직만을 분리해 Component로 만들고, 재사용 불가능한 부분들은 parameter로 받아서 처리하는 방법
+   - React Hooks에서는 따로 **Custom Hooks**를 이용해 **Wrapper가 많아지는 일을 방지**
+4. 소스코드가 **간결**해짐
+
+## 클래스 컴포넌트에서 함수 컴포넌트로 바꾸기
+
+1. `export default function App() {}`
+2. 클래스형 컴포넌트에서는 `render() { }` 안에 `return()` → 함수형 컴포넌트에서는 바로 `return()`
+3. state를 **useState Hook**를 이용해서 표현
+   - react에서 useState를 import한다
+   - `const [getter, setter] = useState('initial value')`
+   - **setter** 함수 **파라미터**의 **첫 번째 값**은 **직전 state**의 값임
+     - 기존 값을 어떻게 업데이트 할 지에 대한 함수를 등록
+
+## State vs Props
+
+### State
+
+- **해당 컴포넌트 내부**에서 사용하는 데이터
+- state는 **변경 가능**함(`setter 함수`)
+- state가 변하면 **re-rendering**된다.
+
+### Props
+
+- properties의 줄임말
+- 상속하는 **부모 컴포넌트**로부터 **자녀 컴포넌트에 데이터를 전달**하는 방법
+- 자식에서 props를 변경해도 변하지 않음 ⇒ props는 **읽기 전용**
+- 부모 컴포넌트에서 state를 변경해야 함
+
+## 컴포넌트 분리하기
+
+- `src/components` 폴더 생성
+- 컴포넌트로 사용할 js파일 생성하기
+- 함수형 컴포넌트의 **shortcut** : `rsf`
+
+## 구조 분해 할당(Destructuring)
+
+- 배열이나 객체의 **속성을 해체**하여 그 값을 **개별 변수**에 담을 수 있게 하는 JavaScript **표현식**
+- *clean code*를 위해서!!!
+- 객체 구조 분해 할당 - `{}`
+- 배열 구조 분해 할당 - `[]`
+- 자세한 공부 내용 : [221210_구조분해할당.js](https://github.com/gyur1kim/inflearn_react_a-z/blob/master/221129_react-todo-app/studying/221210_%EA%B5%AC%EC%A1%B0%EB%B6%84%ED%95%B4%ED%95%A0%EB%8B%B9.js)
+
+- 자식 컴포넌트에서 props 객체를 받을 때, `props.property`로 데이터에 접근하는 방식보다는 `객체 구조 분해 할당`으로 받는 것이 코드가 깔끔해진다.
+
+## TailWindCSS
+
+> HTML 안에서, CSS 스타일을 만들 수 있게 해주는 **CSS 프레임워크.** CSS 프레임워크는 더 빠르게 애플리케이션을 스타일링 하는 데 도움을 준다.
+
+1. `npm install -D tailwindcss postcss autoprefixer`
+   
+   -D는 **개발 환경**에서만 사용하겠다!
+
+2. `npx tailwindcss init`
+
+3. `tailwind.config.js` 에…
+   
+   ```jsx
+   module.exports = {
+    content: [
+      ".src/**/*.{js, jsx, ts, tsx}"
+    ],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+   }
+   ```
+
+4. `App.css` 에…
+   
+   ```jsx
+   @tailwind base;
+   @tailwind components;
+   @tailwind utilities;
+   ```
