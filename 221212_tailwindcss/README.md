@@ -203,6 +203,8 @@
 
 - **적용하기**
   
+  - 적용 코드 : [src/components/List.js](https://github.com/gyur1kim/inflearn_react_a-z/blob/master/221212_tailwindcss/src/components/List.js)
+  
   - `<Draggable />`
     
     [react-beautiful-dnd/draggable.md at master · atlassian/react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/draggable.md)
@@ -258,7 +260,7 @@
     [react-beautiful-dnd/drag-drop-context.md at master · atlassian/react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md)
     
     ```jsx
-    <DragDropContext>
+    <DragDropContext onDragEnd={handleSomething}>
         <Droppable>
             ...
         </Droppable>
