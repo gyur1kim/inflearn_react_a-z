@@ -142,9 +142,13 @@
 ## 구조 분해 할당(Destructuring)
 
 - 배열이나 객체의 **속성을 해체**하여 그 값을 **개별 변수**에 담을 수 있게 하는 JavaScript **표현식**
+
 - *clean code*를 위해서!!!
+
 - 객체 구조 분해 할당 - `{}`
+
 - 배열 구조 분해 할당 - `[]`
+
 - 자세한 공부 내용 : [221210_구조분해할당.js](https://github.com/gyur1kim/inflearn_react_a-z/blob/master/221129_react-todo-app/studying/221210_%EA%B5%AC%EC%A1%B0%EB%B6%84%ED%95%B4%ED%95%A0%EB%8B%B9.js)
 
 - 자식 컴포넌트에서 props 객체를 받을 때, `props.property`로 데이터에 접근하는 방식보다는 `객체 구조 분해 할당`으로 받는 것이 코드가 깔끔해진다.
@@ -180,3 +184,83 @@
    @tailwind components;
    @tailwind utilities;
    ```
+
+## drag and drop api
+
+- **설치** : `npm install react-beautiful-dnd --save`
+
+- **import** : `import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";`
+  
+  - `<DragDropContext />` : drag와 drop을 할 수 있는 영역
+  - `<Droppable />` : draggable가 **드랍될 수 있는 영역**, `<Draggable />`을 포함한다
+  - `<Draggable />` : **드래그할 수 있는 items**
+
+- `provided` : **스타일 지정** 및 **조회**를 위한 속성이 포함되어 있음
+
+- `snapshot` : 사용자가 요소를 드래그하는 경우 className 속성을 selected로 변경 ← 나중에 **스타일**을 적용하는 데 사용
+
+- `placeholder` : 목록에 **빈 공간**을 만든다
+
+- **적용하기**
+  
+  - `<Draggable />`
+    
+    [react-beautiful-dnd/draggable.md at master · atlassian/react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/draggable.md)
+    
+    ```jsx
+    <Draggable
+        // It is important that you add a key prop to each <Draggable />
+        // if you are rendering a list of <Draggable />s
+        key={data.id}
+        draggableId={data.id.toString()}  // string을 사용할 것을 권장
+        index={idx}
+    >
+        // children function, render props
+        {(provided, snapshot) => (
+            <div
+                ref={provided.innerRef}
+                // This controls the movement of the draggable when it is dragging and not dragging
+                {...provided.draggableProps}
+                // DragHandleProps need to be applied to the node that you want to be the drag handle
+                {...provided.dragHandleProps}
+            >
+            </div>
+        )}
+    </Draggable>
+    ```
+  
+  - `<Droppable />`
+    
+    [react-beautiful-dnd/droppable.md at master · atlassian/react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/droppable.md)
+    
+    ```jsx
+    <Droppable droppableId="droppableId">
+        // children function
+        {(provided[, snapshot]) => (
+            <div
+                // In order for the droppable to function correctly, you must bind the provided.innerRef to the highest possible DOM node in the ReactElement. 
+                // We do this in order to avoid needing to use ReactDOM to look up your DOM node.
+                ref={provided.innerRef}
+                // an Object that contains properties that need to be applied to a Droppable element
+                {...provided.droppableProps}
+            >
+                <Draggable /> ...
+    
+                {/* put the placeholder inside of the component for which you have provided the ref */}
+                {provided.placeholder}
+            </div>
+        )}
+    </Droppable>
+    ```
+  
+  - `<DragDropContext />`
+    
+    [react-beautiful-dnd/drag-drop-context.md at master · atlassian/react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/api/drag-drop-context.md)
+    
+    ```jsx
+    <DragDropContext>
+        <Droppable>
+            ...
+        </Droppable>
+    </DragDropContext>
+    ```
