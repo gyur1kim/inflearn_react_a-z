@@ -1,9 +1,11 @@
 import './App.css';
 import React, { useState } from 'react';
-import List from './components/List'
+import Lists from './components/Lists'
 import Form from './components/Form'
 
 function App() {
+  // console.log('check React.memo : App');
+
   // 컴포넌트의 렌더링 결과물에 영향을 주는 데이터를 갖고 있는 객체
   // state = {
   //   todoData: [],
@@ -33,7 +35,7 @@ function App() {
         </div>
 
         {/* props를 이용해 todoData 내리기 */}
-        <List todoData={todoData} setTodoData={setTodoData}/>
+        <Lists todoData={todoData} setTodoData={setTodoData}/>
         <Form value={value} setValue={setValue} handleSubmit={handleSubmit}/>
 
       </div>

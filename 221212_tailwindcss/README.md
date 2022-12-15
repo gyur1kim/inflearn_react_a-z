@@ -295,3 +295,23 @@
 - 따라서 아예 **새로운 배열**을 반환하는 메서드를 사용하자
   - `spread operator` , `map` , `filter` , `slice` , `reduce`
 - **cf)** 원본 데이터를 변경하는 메서드 : `splice` , `push`
+
+## React.memo를 이용한 컴포넌트 렌더링 최적화
+
+### 현재 Todo 앱의 문제점
+
+- App, Lists, List, Form **컴포넌트**로 나눔 ← 컴포넌트의 **렌더링을 최적화**하기 위함
+
+- ex) Form에 할 일을 타이핑
+  
+  - **Form 컴포넌트**와 그 State값을 가진 **App 컴포넌트**만 렌더링 되어야 함
+  - 그런데 Lists, List 컴포넌트까지 렌더링이 되고 있어!!!!!!
+
+- `React.memo` 적용으로 문제 해결 가능
+  
+  - 원하는 컴포넌트를 `React.memo` 로 감싼다
+  
+  ```jsx
+  const List = React.memo((...)=>{...})
+  export default List
+  ```
