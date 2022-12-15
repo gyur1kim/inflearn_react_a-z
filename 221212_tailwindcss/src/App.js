@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Lists from './components/Lists'
 import Form from './components/Form'
 
@@ -15,6 +15,12 @@ function App() {
   //state를 useState Hook를 이용해 표현하기
   const [todoData, setTodoData] = useState([]);
   const [value, setValue] = useState("");
+
+  // useCallback을 이용한 함수 최적화
+  const handleDelete = useCallback((id) => {
+    let newTodoData = todoData.filter(data=> data.id !== id);
+    setTodoData(newTodoData);
+  }, [todoData]);
 
   const handleSubmit = (e)=>{
     e.preventDefault();
@@ -35,7 +41,7 @@ function App() {
         </div>
 
         {/* props를 이용해 todoData 내리기 */}
-        <Lists todoData={todoData} setTodoData={setTodoData}/>
+        <Lists handleDelete={handleDelete} todoData={todoData} setTodoData={setTodoData}/>
         <Form value={value} setValue={setValue} handleSubmit={handleSubmit}/>
 
       </div>

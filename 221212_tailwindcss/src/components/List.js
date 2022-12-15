@@ -1,12 +1,7 @@
 import React from 'react';
 
-const List = React.memo(({id, title, completed, todoData, setTodoData, provided, snapshot}) => {
+const List = React.memo(({id, title, completed, todoData, setTodoData, handleDelete, provided, snapshot}) => {
   // console.log('check React.memo : List');
-
-  const handleDelete = (id) => {
-    let newTodoData = todoData.filter(data=> data.id !== id);
-    setTodoData(newTodoData);
-  }
 
   const handleCompletedChange = (id) => {
     let newTodoData = todoData.map(data => {

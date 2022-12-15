@@ -301,11 +301,11 @@
 ### 현재 Todo 앱의 문제점
 
 - App, Lists, List, Form **컴포넌트**로 나눔 ← 컴포넌트의 **렌더링을 최적화**하기 위함
-
 - ex) Form에 할 일을 타이핑
-  
   - **Form 컴포넌트**와 그 State값을 가진 **App 컴포넌트**만 렌더링 되어야 함
   - 그런데 Lists, List 컴포넌트까지 렌더링이 되고 있어!!!!!!
+
+### 해결 - React.memo
 
 - `React.memo` 적용으로 문제 해결 가능
   
@@ -315,3 +315,29 @@
   const List = React.memo((...)=>{...})
   export default List
   ```
+
+## useCallback을 이용한 함수 최적화
+
+### 문제점
+
+- 컴포넌트가 re-rendering될 때 그 안의 **함수**도 **다시 만들어진다.**
+- 만약 함수가 **자식 컴포넌트**에 **props**로 내려진다면, 컴포넌트가 re-rendering될 때마다 자식 컴포넌트도 함수가 **새롭게 생성**되는 것이므로 **자식 컴포넌트 또한 re-rendering**된다.
+
+### 해결 - useCallback
+
+- `useCallback()` 안에 **콜백함수**와 **의존성 배열**을 순서대로 넣어주면 됨
+  - 함수 내에서 참조하는 **state**, **props**가 있다면 **의존성 배열**에 추가해주기
+- 의존성 배열이 변하지 않는다면 함수는 새로 생성되지 않음
+- 새로 생성되지 않으므로 메모리에 새로 할당되지 않음, **동일 참조값**을 사용
+- 의존성 배열에 아무 것도 없다면?
+  - 컴포넌트가 최초 렌더링 시에만 함수가 생성
+  - 그 이후에는 동일한 참조 값을 사용하는 함수가 된다.
+
+```jsx
+import { useCallback } from 'react'
+
+const handleDelete = useCallback((id) => {
+    let newTodoData = todoData.filter(data=> data.id !== id);
+    setTodoData(newTodoData);
+  }, [todoData]);
+```
