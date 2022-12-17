@@ -1,6 +1,6 @@
 import React from 'react';
 
-const List = React.memo(({id, title, completed, todoData, setTodoData, handleDelete, provided, snapshot}) => {
+const List = ({id, title, completed, todoData, setTodoData, handleDelete, provided, snapshot}) => {
   // console.log('check React.memo : List');
 
   const handleCompletedChange = (id) => {
@@ -32,6 +32,6 @@ const List = React.memo(({id, title, completed, todoData, setTodoData, handleDel
       </div>
     </div>
   );
-})
+}
 
-export default List;
+export default React.memo(List);
