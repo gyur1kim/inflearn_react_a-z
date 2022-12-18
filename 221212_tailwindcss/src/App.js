@@ -13,13 +13,14 @@ function App() {
   // }
 
   //state를 useState Hook를 이용해 표현하기
-  const [todoData, setTodoData] = useState([]);
+  const [todoData, setTodoData] = useState(JSON.parse(localStorage.getItem('todoData')) || []);
   const [value, setValue] = useState("");
 
   // useCallback을 이용한 함수 최적화
   const handleDelete = useCallback((id) => {
     let newTodoData = todoData.filter(data=> data.id !== id);
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData));
   }, [todoData]);
 
   const handleSubmit = (e)=>{
@@ -29,12 +30,14 @@ function App() {
       title: value,
       completed: false,
     }
-    setTodoData(prev => [...prev, newTodo])
+    setTodoData(prev => [...prev, newTodo]);
+    localStorage.setItem('todoData', JSON.stringify([...todoData, newTodo]));
     setValue("");
   }
 
   const handleClearTodos = () => {
     setTodoData([]);
+    localStorage.setItem('todoData', []);
   }
 
   return (

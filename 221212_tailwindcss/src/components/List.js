@@ -6,7 +6,7 @@ const List = ({id, title, completed, todoData, setTodoData, handleDelete, provid
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(title);
 
-  const handleCompletedChange = (id) => {
+  const handleChangeCompleted = (id) => {
     let newTodoData = todoData.map(data => {
       if (data.id === id) {
         data.completed = !data.completed
@@ -14,10 +14,19 @@ const List = ({id, title, completed, todoData, setTodoData, handleDelete, provid
       return data;
     })
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
   }
 
   const handleEditTitle = (e) => {
     setEditedTitle(e.target.value);
+  }
+
+  // 강의에는 없는데, 수정하다가 나가버리면 수정하던 title이 editedTitle에 저장된다
+  // 그래서 재수정 하려고 하면 아까 수정하던 title이 뜬다..
+  // 그래서 수정을 시작할 때 title 값을 editedTitle에 넣어야하지 않나 싶어서...
+  const handleStartEditing = () => {
+    setEditedTitle(title);
+    setIsEditing(prev => !prev);
   }
 
   const handleSubmitTitle = (e) => {
@@ -30,6 +39,7 @@ const List = ({id, title, completed, todoData, setTodoData, handleDelete, provid
       return todo;
     })
     setTodoData(newTodoData);
+    localStorage.setItem('todoData', JSON.stringify(newTodoData))
     setIsEditing(false);
   }
 
@@ -43,7 +53,7 @@ const List = ({id, title, completed, todoData, setTodoData, handleDelete, provid
           </form>
         </div>
         <div className="items-center">
-          <button onClick={() => setIsEditing(false)} className="px-4 py-2 float-right">X</button>
+          <button onClick={handleStartEditing} className="px-4 py-2 float-right">X</button>
           <button type="submit" onClick={handleSubmitTitle} className="px-4 py-2 float-right">저장</button>
         </div>
       </div>
@@ -51,7 +61,6 @@ const List = ({id, title, completed, todoData, setTodoData, handleDelete, provid
   }
   else{
     return (
-
         <div
           // key={data.id}
           ref={provided.innerRef}
@@ -60,15 +69,14 @@ const List = ({id, title, completed, todoData, setTodoData, handleDelete, provid
           className={`flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 border rounded ${snapshot.isDragging? "bg-gray-200" : "bg-gray-100"}`}
         >
           <div className="items-center">
-            <input type="checkbox" defaultChecked={completed} onChange={() => handleCompletedChange(id)} className="mr-2"/>
+            <input type="checkbox" defaultChecked={completed} onChange={() => handleChangeCompleted(id)} className="mr-2"/>
             <span className={ completed? "line-through" : "" }>{title}</span>
           </div>
           <div className="items-center">
             <button onClick={()=> handleDelete(id)} className="px-4 py-2 float-right">X</button>
-            <button onClick={() => setIsEditing(true)} className="px-4 py-2 float-right">수정</button>
+            <button onClick={handleStartEditing} className="px-4 py-2 float-right">수정</button>
           </div>
         </div>
-
     );
   }
 }
