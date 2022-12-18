@@ -352,3 +352,10 @@ const handleDelete = useCallback((id) => {
 - 렌더링 될 때마다 연산이 오래 걸리게 되면? → UI 지연 현상
 - 내부의 연산 값이 이전과 동일하다면, 컴포넌트가 리렌더링 되더라도 연산을 다시 하지 않고 이전 렌더링 때 저장해주었던 값을 재활용
 - vue의 computed같은 느낌?
+
+## LocalStorage
+
+- 서버가 아니라 client의 **브라우저**에 데이터를 저장하자!
+- `setItem()`
+- 객체나 배열을 저장해줄 때는 `JSON.stringify()` 를 이용해 텍스트로 변환한 후 저장하기
+  - 문자열로 변환하지 않으면 Object로 저장됨
