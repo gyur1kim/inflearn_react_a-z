@@ -16,6 +16,8 @@
 
 ## Nav component - useEffect()
 
+참조 : [Hooks API Reference - React](https://ko.reactjs.org/docs/hooks-reference.html#useeffect)
+
 ### useEffect
 
 > 리액트 컴포넌트가 **렌더링**될 때마다 **특정 작업을 실행**할 수 있도록 하는 **Hook**
@@ -25,16 +27,26 @@
 >
 - **기본 형태**
     - `useEffect(function[, deps])`
-    - `function` : 수행하고자 하는 **작업**
+    - `function`
+        - 수행하고자 하는 **작업, effect를 발생하는 함수**
+        - 컴포넌트 **렌더링**이 **완료**된 후 수행된다
+        - `return`
+            - **정리(clean-up) 함**수를 반환
+            - **메모리 누수 방지**를 위해 UI에서 컴포넌트를 **제거하기 전**에 수행
     - `deps` : 배열 형태, **검사**하고자 하는 **특정 값**이나 **빈 배열**
-- **mount** 됐을 때
-    - 컴포넌트가 **처음 렌더링**될 때 **한 번**만 실행하고 싶다면 **빈 배열**
-    - **리렌더링**될 때마다 **함수**를 **실행**하고 싶다면 **deps 생략**
-- **update** 될 때 (특정 props, state가 바뀔 때)
-    - **특정 값**이 **업데이트**될 때 함수를 실행하고 싶다면 **deps 배열**에 검사하고 싶은 값을 넣어준다.
-- **unmount** 될 때, **update** 되기 직전에
-    - `cleanup` 함수 - **return 뒤**에 나오는 함수(=**뒷정리 함수**)
-    - unmount 될 때만 cleanup 함수 실행
-        - deps에 빈 배열 넣기
-    - 특정 값이 업데이트 되기 직전에 cleanup 함수를 실행
-        - deps 배열 안에 검사하고 싶은 값을 넣어준다.
+
+### deps의 유무에 따라서…
+
+- deps를 `생략`하면?
+    - 컴포넌트가 **리렌더링 될 때마다** 호출된다.
+- deps에 특정 값을 넣으면? `[val]`
+    - **mount** :  useEffect에 등록한 함수가 호출됨
+    - **update** : deps에 넣은 값이 바뀔 때마다 호출됨
+    - **unmount** : 호출됨
+    - 값이 바뀌기 직전에도 호출
+    - useEffect 안에서 사용하는 **state**나 **props**를 **deps에 넣어야 한다**
+        - 만약 그러지 않으면! props나 state가 최신 상태가 아니게 된다!
+        - 클로저와 관련 있음?
+- deps가 빈 배열이면? `[]`
+    - **mount** :  useEffect에 등록한 함수가 호출됨, 한 번만 실행
+    - **unmount** : cleanup 함수가 호출됨
