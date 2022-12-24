@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react';
 import axios from '../api/axios'
 import requests from '../api/requests'
 
+import './Banner.css'
+
 function Banner(props) {
   const [movie, setMovie] = useState([]);
 
@@ -27,6 +29,10 @@ function Banner(props) {
     setMovie(movieDetail);
   }
 
+  const truncate = function (text, n){
+    return text?.length > n? text.slice(0, n) + '...' : text
+  }
+
   return (
     <header
       className="banner"
@@ -37,12 +43,12 @@ function Banner(props) {
       }}
     >
       <div className="banner__contents">
-        <h1>{ movie.title || movie.name || movie.original_name }</h1>
+        <h1 className="banner__title">{ movie.title || movie.name || movie.original_name }</h1>
         <div className="banner__buttons">
           <button className="banner__button play">Play</button>
           <button className="banner__button info">More Information</button>
-        <h1 className="banner_description">{movie.overview}</h1>
         </div>
+        <h1 className="banner__description">{truncate(movie.overview, 100)}</h1>
       </div>
 
       <div className="banner--fadeBottom" />
