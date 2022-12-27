@@ -41,7 +41,7 @@ function Banner(props) {
       <Container>
         <HomeContainer>
           <Iframe
-            src={`https://www.youtube.com/embed/${movie.videos.results[0].key}?controls=0&autoplay=1&loop=1&mute=1&playlist=${movie.videos.results[0].key}`}
+            src={`https://www.youtube.com/embed/${movie.videos.results[0].key}?controls=1&autoplay=1&loop=1&mute=1&playlist=${movie.videos.results[0].key}`}
             title="YouTube video player"
             allow="autoplay;"
             allowFullScreen></Iframe>
@@ -63,7 +63,10 @@ function Banner(props) {
         <div className="banner__contents">
           <h1 className="banner__title">{ movie.title || movie.name || movie.original_name }</h1>
           <div className="banner__buttons">
-            <button className="banner__button play" onClick={() => setIsClicked(true)}>Play</button>
+            {/* video가 존재하는 경우에만 동영상 play를 할 수 있도록 하자!*/}
+            {movie.videos?.results.length ?
+              <button className="banner__button play" onClick={() => setIsClicked(true)}>Play</button> : null
+            }
             <button className="banner__button info">More Information</button>
           </div>
           <h1 className="banner__description">{truncate(movie.overview, 100)}</h1>
@@ -80,8 +83,8 @@ function Banner(props) {
 const Iframe = styled.iframe`
   width: 100%;
   height: 100%;
-  z-index: -1;
-  opacity: 0.65;
+  // position: static 속성때문에 z-index는 적용되지 않는다...
+  //z-index: -1;
   border: none;
   
   &::after {
