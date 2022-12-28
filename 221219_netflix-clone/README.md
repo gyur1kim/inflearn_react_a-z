@@ -53,5 +53,5 @@
 ## Styled Component란
 
 - `CSS-in-JS` 라고 하는 Javascript 파일 안에서 CSS를 처리할 수 있게 해주는 **대표적인 라이브러리**
-- `npm install --save styled-component`
-- or `yarn add styled-component`
+- `npm install --save styled-components`
+- or `yarn add styled-components`

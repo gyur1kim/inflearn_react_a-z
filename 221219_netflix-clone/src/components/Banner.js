@@ -18,7 +18,6 @@ function Banner(props) {
   const fetchData = async () => {
     // 현재 상영중인 영화 정보를 가져온다
     const request = await axios.get(requests.fetchNowPlaying);
-    console.log(request)
 
     // 현재 상영중인 영화 중 하나의 영화 랜덤 선택
     const movieId = request.data.results[Math.floor(Math.random() * request.data.results.length)].id;
@@ -27,7 +26,6 @@ function Banner(props) {
     const {data: movieDetail} = await axios.get(`/movie/${movieId}`,{
       params: {append_to_response: "videos" },
     });
-    console.log(movieDetail)
     setMovie(movieDetail);
   }
 
