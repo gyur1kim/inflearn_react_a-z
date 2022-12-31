@@ -26,7 +26,14 @@ function Row({title, id, isLargeRow, fetchUrl}) {
       <div className="slider">
         <div className="slider__arrow-left">
           {/* {"<"}로 표현한 이유 : 안그러면 태그로 인식해서 에러가 남 */}
-          <span className="arrow">{"<"}</span>
+          <span
+            className="arrow"
+            onClick={() => {
+              document.getElementById(id).scrollLeft -= window.innerWidth -80
+            }}
+          >
+            {"<"}
+          </span>
         </div>
 
         <div id={id} className="row__posters">
@@ -45,7 +52,14 @@ function Row({title, id, isLargeRow, fetchUrl}) {
         </div>
 
         <div className="slider__arrow-right">
-          <span className="arrow">{">"}</span>
+          <span
+            className="arrow"
+            onClick={() => {
+              document.getElementById(id).scrollLeft += window.innerWidth -80
+            }}
+          >
+            {">"}
+          </span>
         </div>
       </div>
     </section>

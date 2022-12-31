@@ -55,3 +55,19 @@
 - `CSS-in-JS` 라고 하는 Javascript 파일 안에서 CSS를 처리할 수 있게 해주는 **대표적인 라이브러리**
 - `npm install --save styled-components`
 - or `yarn add styled-components`
+
+# 섹션5. Netflix 앱 완성하기
+
+## scrollLeft, innerWidth
+
+### scrollLeft
+
+- 요소의 **수평 스크롤바 위치**를 나타낸다
+- scrollLeft에 값을 **더해**주면 **오른쪽**으로 이동한다
+- scrollRight에 값을 **빼**면 **왼쪽**으로 이동한다
+- 값을 크게 한다고 해도 최대 스크롤 수평값을 넘길 수 없다
+
+### innerWidth & outerWidth
+
+- `innerWidth`는 창 틀을 뺀 **내용** + **스크롤** 크기
+- `outerWidth`는 **브라우저 화면 전체**
