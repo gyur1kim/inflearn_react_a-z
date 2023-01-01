@@ -5,6 +5,7 @@ import requests from './api/requests'
 import Nav from './components/Nav'
 import Banner from './components/Banner'
 import Row from './components/Row'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         fetchUrl={requests.fetchComedyMovies}
       />
 
+      <Footer />
     </div>
   );
 }
