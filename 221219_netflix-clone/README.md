@@ -71,3 +71,119 @@
 
 - `innerWidth`는 창 틀을 뺀 **내용** + **스크롤** 크기
 - `outerWidth`는 **브라우저 화면 전체**
+
+## React Router Dom
+
+> **SPA**를 가능하게 하는 라이브러리
+>
+
+### SPA란
+
+- **S**ingle **P**age **A**pplication
+- `index.html` 파일 하나에 컴포넌트를 그렸다 지웠다 하며 마치 여러 html을 보여주는 효과가 있음
+
+### React Router Dom 설치하기
+
+- `npm install react-router-dom --save`
+- or `yarn add react-router-dom`
+
+### React Router 설정하기
+
+1. 앱 어디서나 react router를 사용할 수 있도록 설정
+  - `index.js` 파일에 `BrowserRouter` 를 **import**하기
+  - 루트 구성 요소 `<App />`를 래핑하기
+  - **[참조]** BrowserRouter란?
+    - **HTML5 History API**를 이용하여 UI를 URL과 동기화된 상태로 유지해준다
+2. 여러 컴포넌트 생성 및 라우트 정의하기
+
+    ```jsx
+    <Routes>
+    	<Route path='/' element={ <Home/> }/>
+    	<Route path='about' elememt={ <About /> }/>
+    	<Route path='contact' element={ <Contact /> }/>
+    	...
+    </Routes>
+    ```
+
+   `Routes`
+
+  - 앱에서 생성될 모든 개별 경로에 대한 상위 역할
+  - Route들 중 path가 매칭되는 첫번째 Route를 렌더링해줌
+
+   `Route`
+
+  - 단일 경로를 만드는 데 사용됨
+  - **path** : 원하는 컴포넌트의 URL 경로 지정 (’/’ 는 메인 화면)
+  - **element** : 경로에 맟게 렌더링되어야 하는 컴포넌트를 지정
+3. `<Link />` 를 이용해 경로를 이동하기
+
+    ```jsx
+    <div>
+    	<h1>홈페이지</h1>
+    	<Link to="about">About으로 이동</Link>
+    	<Link to="contact">Contact로 이동</Link>
+    </div>
+    ```
+
+
+## React Router Dom APIs
+
+### 중첩 라우팅 (Nested Routes)
+
+```jsx
+<BrowserRouter>
+	<Routes>
+		
+		<Route path='/' element={ <App /> }>                    => 기본으로 렌더링 됨
+			<Route index element={ <Home /> } />                  => /
+
+			<Route path='teams' element={ <Teams /> }>            
+				<Route path=':teamId' element={ <Team /> } />       => /teams/32
+				<Route path='new' element={ <NewTeamForm /> } />    => /teams/new
+				<Route index element={ <LeagueStandings /> } />     => /teams
+			</Route>
+		</Route>
+
+	</Routes>
+</BrowserRouter>
+```
+
+- path 대신 index값을 넣으면 기본으로 나옴,,
+
+### Outlet
+
+- `import { Outlet } from ‘react-router-dom’`
+- 자식 경로 요소를 렌더링하려면 부모 경로 요소에서 `<Outlet />` 를 사용해야 한다.
+- **하위 경로**가 렌더링 되는 공간!
+
+### useNavigate
+
+- `import { useNavigate } from ‘react-router-dom’`
+- 경로를 바꿔준다
+
+### useParams
+
+- `import { useParams } from ‘react-router-dom’`
+- `:` 를 이용하면 URL에 값을 넣을 수 있음, URL의 파라미터를 이용할 수 있음
+
+```jsx
+...
+<Route path=":teamId" element={ <Team /> } />
+...
+
+let params = useParams();
+return <h1>이 주소의 파라미터 : {params.teamId}</h1>
+```
+
+### useLocation
+
+- `import { useLocation } from ‘react-router-dom’`
+- 현재 위치 객체를 반환함
+- 현재 위치가 변경될 때마다 일부 side effect를 수행하려는 경우에 유용
+
+### useRoutes
+
+- `import { useRoutes } from ‘react-router-dom’`
+- 이 Hooks는 `<Routes>` 와 기능적으로 동일함
+  - 하지만 <Route> 요소가 아니라 Javascript 객체를 사용하여 경로를 정의한다
+  - 이러한 객체는 JSX가 필요하지 않음
