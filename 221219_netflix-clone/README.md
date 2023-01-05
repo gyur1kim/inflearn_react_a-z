@@ -187,3 +187,38 @@ return <h1>이 주소의 파라미터 : {params.teamId}</h1>
 - 이 Hooks는 `<Routes>` 와 기능적으로 동일함
   - 하지만 <Route> 요소가 아니라 Javascript 객체를 사용하여 경로를 정의한다
   - 이러한 객체는 JSX가 필요하지 않음
+
+## useLocation을 이용한 검색 기능
+
+- URL의 쿼리스트링에 적힌 값을 가져오는 과정
+
+    ```jsx
+    const useQuery = () => {
+      return new URLSearchParams(useLocation().search);
+    };
+    
+    let query = useQuery();
+    const searchTerm = query.get("q");
+    ```
+
+    - **useLocation**
+        - 현재 **위치**(location) **객체**를 리턴하는 hook
+
+        ```jsx
+        Object {
+        	hash: ""
+        	key: "~~~"
+        	pathname: "/search"
+        	search: "?q=hello"
+        	state: null
+        }
+        ```
+
+    - **URLSearchParams**
+      - [URLSearchParams - Web APIs | MDN](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
+      - URL의 query string로 작업할 유틸리티 메서드를 정의
+      - `URLSearchParams` **객체 인스턴스**를 반환
+      - `for … of` 를 이용해 순회할 수 있음
+      - `URLSearchParams.get()`
+
+        주어진 검색 매개변수와 관련된 첫번째 값을 반환
