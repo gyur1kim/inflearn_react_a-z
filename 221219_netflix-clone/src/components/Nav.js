@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Nav.css'
 
 function Nav(props) {
 
   // 스크롤바를 일정 내리면 Nav바의 배경을 까맣게, 그렇지 않으면 배경을 투명하게..
   const [show, setShow] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     // 리스너 하나 등록하기, 스크롤이 발생하면 이벤트 발생
@@ -22,6 +25,11 @@ function Nav(props) {
     };
   });
 
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+    navigate(`/search?q=${e.target.value}`);
+  }
+
   return (
     <nav className={`nav ${show ? 'nav__black' : ''}`}>
       {/* 로고 태그 */}
@@ -32,6 +40,15 @@ function Nav(props) {
         /* 새로고침 */
         onClick={() => window.location.reload()}
       />
+
+      <input
+        value={searchValue}
+        onChange={handleChange}
+        className="nav__input"
+        type="text"
+        placeholder="영화를 검색해주세요"
+      />
+
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png"
         alt="User logged"

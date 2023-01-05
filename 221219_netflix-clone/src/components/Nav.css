@@ -30,3 +30,13 @@
     width: 30px;
     object-fit: contain;
 }
+
+.nav__input {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    color: white;
+    border: none;
+}
