@@ -206,11 +206,11 @@ return <h1>이 주소의 파라미터 : {params.teamId}</h1>
 
         ```jsx
         Object {
-        	hash: ""
-        	key: "~~~"
-        	pathname: "/search"
-        	search: "?q=hello"
-        	state: null
+            hash: ""
+            key: "~~~"
+            pathname: "/search"
+            search: "?q=hello"
+            state: null
         }
         ```
 
@@ -222,3 +222,34 @@ return <h1>이 주소의 파라미터 : {params.teamId}</h1>
       - `URLSearchParams.get()`
 
         주어진 검색 매개변수와 관련된 첫번째 값을 반환
+
+## useDebounce Custom Hooks 만들기
+
+### Debounce란?
+
+> debounce function은 사용자가 미리 결정된 시간 동안 타이핑을 멈출 때까지 **keyup 이벤트**의 처리를 **지연**시킴
+>
+- UI코드가 모든 이벤트를 처리할 필요가 없음
+- 서버로 전송되는 API 호출 수도 크게 줄어든다
+
+```jsx
+export const useDebounce = (value, delay) => {
+  const [debounceValue, setDebounceValue] = useState(value);
+	
+	// 딜레이 시간이 지나면 value를 debounceValue에 설정
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebounceValue(value)
+    }, delay);
+		
+		// value가 업데이트 되면 setTimeout 함수를 없앤다. 다시 delay 계산하려고..
+    return () => {
+      clearTimeout(handler);
+    }
+
+  }, [value, delay]);
+	
+	// 새로 저장된 값 반환
+  return debounceValue;
+}
+```
