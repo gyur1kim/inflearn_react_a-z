@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useLocation } from 'react-router-dom';
 
 import axios from '../../api/axios'
+import { useDebounce } from "../../hooks/useDebounce";
 import './SearchPage.css'
 
 export default function SearchPage(props) {
@@ -12,18 +13,20 @@ export default function SearchPage(props) {
   };
   let query = useQuery();
   const searchTerm = query.get("q");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   // console.log(searchTerm);
 
   useEffect(() => {
-    if (searchTerm) {
-      fetchSearchMovie(searchTerm);
+    if (debouncedSearchTerm) {
+      console.log(debouncedSearchTerm);
+      fetchSearchMovie(debouncedSearchTerm);
     }
-  }, [searchTerm]);
+  }, [debouncedSearchTerm]);
 
-  const fetchSearchMovie = async (searchTerm) => {
+  const fetchSearchMovie = async (debouncedSearchTerm) => {
     try {
       const request = await axios.get(
-        `/search/multi?include_adult=false&query=${searchTerm}`
+        `/search/multi?include_adult=false&query=${debouncedSearchTerm}`
       )
       setSearchResult(request.data.results);
     }
@@ -31,8 +34,6 @@ export default function SearchPage(props) {
       console.log(error);
     }
   }
-
-  console.log(searchResult)
 
   const renderSearchResults = () => {
     return searchResult.length > 0? (
@@ -54,7 +55,7 @@ export default function SearchPage(props) {
     (
       <section className="no-results">
         <div className="no-results__text">
-          <p>"{searchTerm}" 와/과 관련된 영화가 존재하지 않습니다</p>
+          <p>"{debouncedSearchTerm}" 와/과 관련된 영화가 존재하지 않습니다</p>
         </div>
       </section>
     )
