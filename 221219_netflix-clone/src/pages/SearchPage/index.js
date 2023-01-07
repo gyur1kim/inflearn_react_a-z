@@ -50,6 +50,9 @@ export default function SearchPage(props) {
               </div>
             );
           }
+          else {
+            return null
+          }
         })}
       </section>
     ) :
