@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import axios from '../../api/axios'
 import { useDebounce } from "../../hooks/useDebounce";
@@ -15,6 +15,7 @@ export default function SearchPage(props) {
   const searchTerm = query.get("q");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   // console.log(searchTerm);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (debouncedSearchTerm) {
@@ -43,7 +44,7 @@ export default function SearchPage(props) {
             const movieImageUrl = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`;
             return (
               <div className="movie" key={`movie__column-${movie.id}`}>
-                <div className="movie__column-poster">
+                <div className="movie__column-poster" onClick={() => { navigate(`/${movie.id}`) }}>
                   <img src={movieImageUrl} alt="movie poster" className="movie__poster" />
                 </div>
               </div>
