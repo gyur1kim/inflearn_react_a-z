@@ -377,3 +377,71 @@ export const useDebounce = (value, delay) => {
     
     </Swiper>
     ```
+
+## Github를 이용해 배포하기
+
+### API_KEY 환경변수로 숨기기
+
+- `.env` 파일 생성
+    - 파일 내에 API_KEY 저장!
+
+    ```jsx
+    // .env
+    REACT_APP_MOVIE_DB_API_KEY=2808f49cb7a157269d3c55874b8d52e5
+    ```
+
+- `process.env.REACT_APP_MOVIE_DB_API_KEY` 의 방식으로 가져다 쓰기
+
+    ```jsx
+    // axios.js
+    const instance = axios.create({
+      baseURL: "https://api.themoviedb.org/3",
+      params: {
+        api_key: process.env.REACT_APP_MOVIE_DB_API_KEY,
+        language: "ko-KR"
+      }
+    })
+    ```
+### 배포하기
+1. gh-pages 모듈 설치
+    - `npm install gh-pages --save-dev`
+2. `package.json`에 홈페이지 url 작성
+    - https://{github user name}.github.io/{repository name}/
+
+    ```jsx
+    // package.json
+    {
+      "name": "221219_netflix-clone",
+      "version": "0.1.0",
+      "private": true,
+      "homepage": "https://gyur1kim.github.io/inflearn_react_a-z/",
+    	...
+    }
+    ```
+
+3. 배포를 위한 scripts 추가
+
+    ```jsx
+    // package.json
+    ...
+    "scripts": {
+        ...
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build",
+        ...
+      },
+    ...
+    ```
+
+4. react router dom의 기본 경로 변경
+
+    ```jsx
+    // index.js
+    root.render(
+      <BrowserRouter basename="inflearn_react_a-z">
+        <App />
+      </BrowserRouter>
+    );
+    ```
+
+5. `npm run deploy`
