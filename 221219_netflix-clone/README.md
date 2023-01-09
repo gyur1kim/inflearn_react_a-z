@@ -253,3 +253,62 @@ export const useDebounce = (value, delay) => {
   return debounceValue;
 }
 ```
+
+## 모달창 외부 클릭시 닫히는 Custom hooks
+
+1. 내가 어디를 클릭하는지 알아야 함!(모달창 밖? 안?)
+2. 모달 창 바깥을 클릭 시 → Callback 함수를 호출하는 event 등록
+3. Callback 함수에서 모달 창 닫기
+
+### 어디를 클릭하나요? - `useRef`
+
+> **특정 DOM**을 선택할 때 사용하는 React Hooks
+>
+- **JS** : `getElementById` , `querySelector` 같은 DOM Selector 함수를 사용
+- **React** : ref를 이용해 DOM 선택
+    - 클래스 컴포넌트 : `React.createRef()`
+    - 함수형 컴포넌트 : `useRef()`
+- DOM을 직접 선택해야 하는 경우
+    1. **element 크기**를 가져와야 할 때
+    2. **스크롤바 위치**를 가져와야 할 때
+    3. element에 **포커스**를 설정해줘야 할 때 등…
+- `useRef` 사용법!
+    - `useRef()` 를 이용해 **Ref 객체** 만들기
+    - 이 객체를 **특정 DOM**의 **ref 값**으로 **설정** `ref={만들어둔 Ref 객체}`
+    - Ref 객체의 `.current` 값이 **특정 DOM**을 가리키게 됨
+
+    ```jsx
+    //MovieModal.js
+    import useOnClickOutside from "../../hooks/useOnClickOutside";
+    
+    const ref = useRef();
+    useOnClickOutside(ref, () => {setModalOpen(false)});
+      
+    return (
+      <div className="presentation">
+        <div className="wrapper-modal">
+          <div className="modal" ref={ref}>
+    			....
+    ```
+
+    ```jsx
+    //useOnClickOutside.js
+    function UseOnClickOutside(ref, handler) {
+      useEffect(() => {
+        const listener = (e) => {
+          console.log(ref.current);
+          if(!ref.current || ref.current.contains(e.target)) {
+            return;
+          }
+          handler();
+        };
+        document.addEventListener("mousedown", listener);
+        document.addEventListener("touchstart", listener);
+    
+        return () => {
+          document.addEventListener("mousedown", listener);
+          document.addEventListener("touchstart", listener);
+        }
+      }, [ref, handler])
+    }
+    ```
