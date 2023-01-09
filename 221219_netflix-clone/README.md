@@ -312,3 +312,68 @@ export const useDebounce = (value, delay) => {
       }, [ref, handler])
     }
     ```
+
+## swiper 모듈을 이용한 터치 슬라이드
+
+- 공식 문서 : [Swiper React Components](https://swiperjs.com/react)
+
+1. `npm install swiper`
+2. 필요한 모듈 갖다쓰기
+
+    ```jsx
+    import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+    import { Swiper, SwiperSlide } from 'swiper/react';
+    
+    // Import Swiper styles
+    import 'swiper/css';
+    import 'swiper/css/navigation';
+    import 'swiper/css/pagination';
+    import 'swiper/css/scrollbar';
+    ```
+
+3. 사용하기
+
+    ```jsx
+    <Swiper
+      // install Swiper modules
+      modules={[Navigation, Pagination, Scrollbar, A11y]}
+      spaceBetween={50}
+    
+      // 반응형 웹페이지
+      breakpoints={{
+        1378: {
+          slidesPerView: 6,      // 몇 개씩 보여줄건지!
+          slidesPerGroup: 6      // 한 번에 몇 개씩 넘길 것인지
+        },
+        998: {
+          slidesPerView: 5,
+          slidesPerGroup: 5
+        },
+        625: {
+          slidesPerView: 4,
+          slidesPerGroup: 4
+        },
+        0: {
+          slidesPerView: 3,
+          slidesPerGroup: 3
+        }
+      }}
+      navigation                          // arrow btn
+      pagination={{ clickable: true }}
+      loop={true}                         // 무한반복
+    >
+    
+      <div id={id} className="row__posters">
+        {movies.map((movie) => {
+          return (
+            <SwiperSlide key={movie.id}>
+              <img
+              ...
+              />
+            </SwiperSlide>
+          )
+        })}
+      </div>
+    
+    </Swiper>
+    ```
