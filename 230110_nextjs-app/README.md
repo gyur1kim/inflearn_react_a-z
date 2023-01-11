@@ -44,3 +44,15 @@
 ### Next.config.js
 
 - next에 관한 설정
+
+## Pre-rendering
+
+> 모든 페이지를 위한 ***HTML을*** Client 사이드에서 자바스크립트로 처리하기 전, ***‘사전에 생성한다’***
+>
+- pre render test → **자바스크립트 disable**
+  - Chrome DevTools
+  - `Ctrl` + `shift` + `P`
+  - javascript 검색
+  - disable javascript
+- react는 CSR 이므로 자바스크립트를 disable하면 화면이 렌더링되지 않음
+- next.js는 SSR 이므로 자바스크립트를 disable해도 화면이 렌더링됨
