@@ -160,3 +160,26 @@
   - 모든 요청에 대한 결과를 계산, 추가 구성 없이 CDN에 의해 결과를 캐시할 수 없음
 
     ⇒ getStaticProps보다 첫번째 바이트까지의 시간이 느림
+
+## Typescript란
+
+> **javascript + type**
+>
+
+### typescript가 나온 배경
+
+- JavaScript 코드가 커질수록 복잡해짐!
+
+  → 코드를 유지 관리하고 재사용하기 어려워짐
+
+- type 검사 및 컴파일 시 오류 검사의 기능을 수용하지 못함
+
+### typescript
+
+- typescript → **typescript complier** → javascript
+- **Type System**
+  - 개발 환경에서 에러 잡는 것을 도와줌
+  - type annotation을 사용해 코드를 분석할 수 있음
+  - 오직 개발 환경에서만 활성화됨
+  - 타입 스크립트와 성능 향상과는 관계가 없음
+  - 타입 스크립트와 성능 향상과는 관계가 없음
