@@ -56,3 +56,107 @@
   - disable javascript
 - react는 CSR 이므로 자바스크립트를 disable하면 화면이 렌더링되지 않음
 - next.js는 SSR 이므로 자바스크립트를 disable해도 화면이 렌더링됨
+
+## Data fetching
+
+### getStaticProps
+
+> static generation으로 빌드할 때 데이터를 불러옴(==미리 만들어둠)
+>
+- getStaticProps 함수를 **async**로 export하면, getStaticProps에서 리턴되는 **props**를 가지고 페이지를 pre-render한다
+- build time에 페이지를 렌더링한다
+
+    ```tsx
+    function blog({ posts }) {
+      return (
+        <ul>
+          {posts.map((post) => {
+            <li>
+              {post.title}
+            </li>
+        })}
+        </ul>
+      )
+    }
+    
+    export async function getStaticProps() {
+      const res = await fetch('https://....')
+      const posts = await res.json()
+      
+      return (
+        props: {
+          posts,
+        }
+      )
+    }
+    ```
+
+- getStaticProps를 사용해야 할 때
+  - 사용자의 요청보다 먼저 build 시간에 필요한 데이터를 가져올 때
+  - Headless CMS에서 데이터를 가져올 때
+  - 데이터를 공개적으로 캐시할 수 있을 때
+  - 페이지는 미리 렌더링되어야 하고 매우 빨라야할 때
+
+### getStaticPath
+
+> static generation으로 데이터에 기반하여 pre-render시 특정한 동적 라우팅 구현
+( `pages/post/[id].js` )
+>
+- 동적 라우팅이 필요할 때 getStaticPaths로 경로 리스트를 정의
+
+  → HTML build time에 렌더링된다
+
+- pre-render에서 정적으로 getStaticPaths에서 호출하는 경로들을 가져온다
+
+    ```tsx
+    function Post({ post }) {
+      //...
+    }
+    
+    export async function getStaticPaths () {
+      const res = await fetch('https://...');
+      const posts = await res.json();
+    
+      const paths = posts.map((post) => ({
+        params: { id: post.id },
+      }))
+    
+      return { paths, fallback: false }
+    }
+    
+    export async function getStaticProps ({ params }) {
+      const res = await fetch(`https://..../${params.id}`);
+      const post = await res.json();
+    
+      return { props: {post} }
+    }
+    ```
+
+- `fallback`
+  - `false` : getStaticPaths로 리턴되지 않는 것은 **404 페이지**로 뜬다
+  - `true` : getStaticPaths로 리턴되지 않는 것은 **fallback 페이지**로 뜬다
+
+### getServerSideProps
+
+> server side rendering으로 요청이 있을 때 데이터를 불러옴
+>
+- getServerSideProps 함수를 async로 export하면, Next는 각 요청마다 리턴되는 데이터를 getServerSideProps로 pre-render한다
+
+    ```tsx
+    export default functionPage ({ data }) {
+      //...
+    }
+    
+    export async function getServerSideProps() {
+      const res = await fetch('https://...');
+      const data = await res.json();
+      
+      return { props: { data }}
+    }
+    ```
+
+- getServerSideProps를 사용해야 할 때
+  - 요청할 때 데이터를 가져와야 하는 페이지를 미리 렌더해야할 때
+  - 모든 요청에 대한 결과를 계산, 추가 구성 없이 CDN에 의해 결과를 캐시할 수 없음
+
+    ⇒ getStaticProps보다 첫번째 바이트까지의 시간이 느림
