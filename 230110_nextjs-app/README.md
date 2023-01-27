@@ -183,3 +183,67 @@
   - 오직 개발 환경에서만 활성화됨
   - 타입 스크립트와 성능 향상과는 관계가 없음
   - 타입 스크립트와 성능 향상과는 관계가 없음
+
+
+## 마크다운 파일을 데이터로 추출하기
+
+### 1. process.cwd()
+
+- **현재 작업 디렉토리**를 반환
+- node 명령을 호출한 **작업 디렉토리**의 **절대경로**
+- 현재 작업 디렉토리 + posts → 블로그 글이 들어있는 경로 생성
+
+    ```tsx
+    const postsDirectory = path.join(process.cwd(), 'posts');
+    ```
+
+
+### 2. fs.readdirSync()
+
+- 대상 디렉토리 내의 모든 파일 읽어오기
+
+    ```tsx
+    const fileNames = fs.readdirSync(postsDirectory);
+    // 결과 : [pre-rendering.md, ssg-ssr.md]
+    ```
+
+
+### 3. md file 읽어 객체로 반환하기
+
+- **gray-matter**
+  - `npm install gray-matter --save`
+  - md 파일의 내용을 data로 변환할 때 사용하는 모듈
+  - string을 object로!
+
+    ```tsx
+    const allPostsData = fileNames.map((fileName) => {
+      const id = fileName.replace(/\.md$/, '');
+      const fullPath = path.join(postsDirectory, fileName);
+      const fileContents = fs.readFileSync(fullPath, 'utf-8');
+      const matterResult = matter(fileContents);
+    
+      return {
+        id,
+        ...allPostsData(matterResult.data as { date: string; title: string })
+      }
+    })
+    ```
+
+
+### 4. 날짜를 기준으로 sort하기
+
+- `sort()`
+  - 콜백 함수를 이용해 원하는 값을 기준으로 정렬 가능
+  - `(a, b) ⇒ {}`
+
+
+    - 📌 <오름차순 기준>
+  
+      - return 값이 0보다 작으면 a를 b보다 낮은 인덱스로 정렬(a가 먼저 옴)
+        - a가 b보다 작으면 음수를 반환하자
+        - `a-b`
+      - 0을 반환하면 a와 b를 서로에 대해 변경하지 않음
+      - return 값이 0보다 크면, b를 a보다 낮은 인덱스로 정렬(b가 먼저 옴)
+        - b가 a보다 작으면 양수를 반환하자
+        - `b-a`
+
