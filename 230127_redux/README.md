@@ -1,46 +1,34 @@
-# Getting Started with Create React App
+## 리덕스란?
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### props vs state
 
-## Available Scripts
+- props
+    - **properties**의 줄임말
+    - props는 구성 요소가 **서로 통신**하는 방법
+    - 상위 구성요소 → 하위 구성요소
+- state
+    - component 내부에서 데이터를 전달하는 방식
+    - state is mutable
 
-In the project directory, you can run:
+### redux data flow
 
-### `npm start`
+![redux_data_flow](https://user-images.githubusercontent.com/96561861/215114140-9d4b3b50-caa1-4ebf-a2fe-e37a639607f8.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- 컴포넌트에서 state 변경 요청(dispatch)
+- **Action 객체**
+    - 간단한 javascript **객체**
+    - 우리가 수행하는 **작업의 유형**을 지정하는 **type 속성**이 있음
+    - redux 저장소에 일부 데이터를 보내는 데 사용되는 **payload 속성**을 가질 수도 있 다.
+- **reducer** 함수 실행
+    - 애플리케이션 상태의 **변경 사항을 결정(type)**하고 **업데이트된 상태를 반환**하는 함수
+    - 인수로 조치를 취하고 store 내부의 상태를 업데이트
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+        ```tsx
+        (previousState, action) => nextState
+        ```
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- redux store 업데이트
+    - 애플리케이션의 **전체 상태 트리**를 보유한다.
+    - **내부 상태를 변경**하는 **유일한 방법**은 해당 상태에 대한 **Action 전달**하기!
+    - 클래스가 아닌 몇 가지 Methods가 있는 **객체**일 뿐!
+- 변화한 state를 가진 컴포넌트들 리렌더링
