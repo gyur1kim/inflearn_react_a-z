@@ -3,15 +3,28 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createStore } from 'redux'
+import counter from './reducers/index'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(
+
+// counter reducer 가져오깅
+const store = createStore(counter);
+
+const render = () => root.render(
   <React.StrictMode>
-    <App />
+    <App
+      // props로 전달하기
+      value={store.getState()}
+      onIncrement={()=>{store.dispatch({type: 'INCREMENT'})}}
+      onDecrement={() => {store.dispatch({type: 'DECREMENT'})}}
+    />
   </React.StrictMode>
 );
+render();
+store.subscribe(render)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
