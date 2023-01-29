@@ -87,3 +87,23 @@
       render();
       store.subscribe(render)
       ```
+
+## Combine Reducers
+
+- 리듀서는 하나만 존재( `Root Reducer` )하고, 그 안에 여러 개의 리듀서( `sub Reducer` )를 가질 것!
+- root reducer를 만들 때 사용하는 것이 `CombineReducers`
+
+```tsx
+// src/reducers/index
+
+import {combineReducers} from "redux";
+import counter from './counter';
+import todos from './todos'
+
+const rootReducer = combineReducers({
+  counter,
+  todos
+})
+
+export default rootReducer;
+```
