@@ -247,3 +247,21 @@
         - b가 a보다 작으면 양수를 반환하자
         - `b-a`
 
+## Typescript Type
+
+모든 value는 type을 갖는다.
+
+typescript는javascript에서 기본으로 제공하는 기본 제공 유형을 상속한다.
+
+- **Primitive types**
+  - string
+  - number
+  - boolean
+  - null
+  - undefined
+  - symbol
+- **Object types**
+  - function
+  - array
+  - classes
+  - object
