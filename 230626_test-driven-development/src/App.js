@@ -2,6 +2,9 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  // ESLint Error 발생
+  // hello();
+  // let hello = () => console.log(hello);
   return (
     <div className="App">
       <header className="App-header">
