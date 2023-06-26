@@ -138,8 +138,6 @@
   
   - => `screen 객체`를 사용하자.
 
-
-
 ### 쿼리 함수
 
 - 페이지에서 요소를 찾기 위해 테스트 라이브러리가 제공하는 방법
@@ -178,8 +176,6 @@
 
 ![](README_assets/2023-06-26-15-45-27-image.png)
 
-
-
 ## Prettier
 
 - 테스팅 할 때, matcher를 알맞게 쓰는지 확신이 들지 않을 때
@@ -188,13 +184,9 @@
 
 ... 를 도와주는 모듈 (**Prettier**, **ESLint**)
 
- 
-
 - code formatter 역할, **코드 형식**을 맞추는 데 사용.
 
 - 에러를 잡는 역할이 아님!
-
-
 
 ## ESLint
 
@@ -248,3 +240,115 @@
     - `/react` : 리액트를 위한 규칙
     
     - `/recommended` : 추천이 되는 걸 사용
+
+
+
+---
+
+# 카운터 앱 만들어보기
+
+## 테스트케이스 작성
+
+1. Counter는 0부터 시작한다.
+   
+   ```javascript
+   // App.test.js
+   test ('the counter starts at 0', () => {
+     render(<App />);
+     const counterElement = screen.getByTestId("counter");
+     expect(counterElement).toBe(0);
+   })
+   
+   
+   // App.js
+   <h3 data-testid="counter">{count}</h3>
+   ```
+   
+   - 결과는? **에러**
+     
+     - `toBe(0)` => 0이라는 값을 기대했음
+     
+     - 하지만 실제로 받은 것은 `<h3 data-testid="counter">{count}</h3>`
+   
+   - `toBe(0)` 을 **`toHaveTextContent(0)` 으로 변경**하자.
+     
+     - Element가 아닌 Element 내 텍스트를 가져오는 것!
+
+2. 숫자를 1 증가하는 버튼, 1 감소하는 버튼을 생성한다.
+   
+   ```javascript
+   // App.test.js
+   test ('minus button has correct text', () => {
+     render(<App />);
+     const buttonElement = screen.getByTestId('minus-button');
+     expect(buttonElement).toHaveTextContent('-');
+   })
+   test ('plus button has correct text', () => {
+     render(<App />);
+     const buttonElement = screen.getByTestId('plus-button');
+     expect(buttonElement).toHaveTextContent('+');
+   })
+   
+   // App.js
+   <button data-testid="minus-button">-</button>
+   <button data-testid="plus-button">+</button>
+   ```
+
+3. 버튼을 누르면 값이 증가하거나 감소한다.
+   
+   - **FireEvent API**
+     
+     - 유저가 발생시키는 **액션**에 대한 테스트를 해야하는 경우 사용
+   
+   ```javascript
+   // App.test.js
+   test('when the + button is pressed, the counter changes to 1', () => {
+     render(<App />);
+     const buttonElement = screen.getByTestId('plus-button');
+     fireEvent.click(buttonElement);
+     const counterElement = screen.getByTestId("counter")
+     expect(counterElement).toHaveTextContent(1)
+   })
+   
+   ```
+
+4. On/Off 버튼 style 테스트
+   
+   - CSS 관련 테스트 - `toHaveStyle`
+   
+   ```javascript
+   // App.test.js
+   test('on/off color as blue color', () => {
+     render(<App />);
+     const buttonElement = screen.getByTestId('on/off-button');
+     expect(buttonElement).toHaveStyle({backgroundColor: "blue"})
+   })
+   
+   // App.js
+   <button
+     data-testid="on/off-button"
+     style={{backgroundColor: "blue"}}
+   >On/Off</button>
+   ```
+
+5. On/Off 버튼 클릭 시 `+, - 버튼` disabled 활성화
+   
+   - `toBeDisabled()`
+   
+   ```javascript
+   // App.test.js
+   test("prevent the -, + button from being pressed when the on/off button is clicked", () => {
+     render(<App />);
+     const onOffButtonElement = screen.getByTestId("on/off-button");
+     fireEvent.click(onOffButtonElement);
+     const plusButtonElement = screen.getByTestId('plus-button');
+     expect(plusButtonElement).toBeDisabled();
+   })
+   
+   // App.js
+   <button
+     data-testid="on/off-button"
+     style={{backgroundColor: "blue"}}
+     onClick={() => setDisabled(prev => !prev)}
+   >On/Off</button>
+   ```
