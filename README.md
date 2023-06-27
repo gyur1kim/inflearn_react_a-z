@@ -8,4 +8,8 @@
 
 - 섹션6/섹션7. 230626 - [React TDD 기본 + Counter 예제](https://github.com/gyur1kim/inflearn_react_a-z/tree/master/230626_test-driven-development)
 
+- 섹션7. 230627 - [Counter 예제 깃허브 action + S3 bucket을 이용해 배포하기](https://github.com/gyur1kim/react-github-actions)
+  
+  - 해당 부분은 따로 레포지토리를 팠습니다
+
 - 섹션8. 220110 - [next.js + typescript](https://github.com/gyur1kim/inflearn_react_a-z/tree/master/230110_nextjs-app)
