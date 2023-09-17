@@ -8,6 +8,7 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   return (
     <div>
+      {/*이 부분은 html의 head 부분에 해당된다*/}
       <Head>
         <title>gyur1kim</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -32,3 +33,9 @@ export default function Home() {
 }
 
 // const Home: NextPage = () => {} 라고 쓸 수도 있음
+/**
+ * 1. Home이라는 상수를 선언
+ * 2. NextPage는, Next.js에서 제공하는 Typescript의 타입이다.
+ *    Next.js 페이지 컴포넌트의 타입이다.
+ * 3.즉 Home이라는 컴포넌트를 생성하는데, 이 컴포넌트의 타입이 NextPage인 것이다.
+ */
