@@ -219,8 +219,8 @@
   - md 파일의 내용을 data로 변환할 때 사용하는 모듈
   
   - string을 object로!
-    
-    ```tsx
+  
+  - ```tsx
     const allPostsData = fileNames.map((fileName) => {
       const id = fileName.replace(/\.md$/, '');
       const fullPath = path.join(postsDirectory, fileName);
@@ -237,11 +237,13 @@
 ### 4. 날짜를 기준으로 sort하기
 
 - `sort()`
+  
   - 콜백 함수를 이용해 원하는 값을 기준으로 정렬 가능
+  
   - `(a, b) ⇒ {}`
-
-    - 📌 <오름차순 기준>
     
+    - 📌 <오름차순 기준>
+      
       - return 값이 0보다 작으면 a를 b보다 낮은 인덱스로 정렬(a가 먼저 옴)
         - a가 b보다 작으면 음수를 반환하자
         - `a-b`
@@ -257,14 +259,17 @@
 typescript는javascript에서 기본으로 제공하는 기본 제공 유형을 상속한다.
 
 - **Primitive types**
+  
   - string
   - number
   - boolean
-  - null               : 하나의 값을 가진다
+  - null                : 하나의 값을 가진다
   - undefined    : 초기화되지 않은 변수의 기본값
   - symbol         : 고유한 상수값
   - void
+
 - **Object types**
+  
   - function
   - array
   - class
@@ -274,16 +279,71 @@ typescript는javascript에서 기본으로 제공하는 기본 제공 유형을 
   // function
   const getNumber = (i: number): void => { console.log(i) }
   
-  
   // array
   const arr: string[] = ['a', 'b', 'c']
-  
   
   // class
   class Music {}
   let music: Music = new Music()
   
-  
   //object
   let point: {x: number, y: number} = {x: 20, y: 10}
+  ```
+
+## Typescript 추가 제공 타입
+
+### `Any`
+
+- 잘 알지 못하는 타입을 표현해야 할 때
+
+- 컴파일 시 타입 검사를 하지 않고 통과하기를 바랄 때
+
+- 최대한 사용하지 않기
+  
+  - tsconfig.json 파일에서 `noImplicitAny` 옵션을 추가하면 `any`타입 사용시 오류 발생
+
+### `Union`
+
+- 둘 이상의 타입을 사용할 수 있음
+
+- ```typescript
+  let code: string | number;
+  code = 123     // true
+  code = "123"   // true
+  code = false   // false
+  ```
+
+### `Enum`
+
+- 열거형 (Enumerated type)
+
+- 값들의 집합을 명명
+
+- 열거된 각 값은 별도의 값이 설정되지 않은 경우 기본적으로 0부터 시작
+
+- ```typescript
+  enum PrintMedia {
+      Newspaper,   // 0
+      Newsletter,  // 1
+      Magazine,    // 2
+      Book         // 3
+  }
+  
+  let mediaType: number = 3
+  let mediaType: number = PrintMedia.Book  
+  // 위와 아래는 같은 표현임
+  // 하지만, 3이라 하면 무슨 타입인지 알기 어렵지만, PrintMedia.Book으로 하면 좀 더 명시적임
+  ```
+
+- 별도의 값을 설정할 수도 있음
+  
+  - 값이 할당되지 않은 아이템은 이전 아이템의 값에 +1 된 값이 설정됨
+
+- ```typescript
+  enum PrintMedia {
+      Newspaper = 1,   // 1
+      Newsletter = 50, // 50
+      Magazine = 55,   // 55
+      Book             // 56 (55+1)
+  }
   ```
