@@ -329,21 +329,92 @@ typescript는javascript에서 기본으로 제공하는 기본 제공 유형을 
       Book         // 3
   }
   
+  // 위와 아래는 같은 표현임
+  // type이 3이면 무슨 타입인지 파악하기 어려움
+  // PrintMedia.Book으로 mediaType을 나타내면 파악하기 편리함
   let mediaType: number = 3
   let mediaType: number = PrintMedia.Book  
-  // 위와 아래는 같은 표현임
-  // 하지만, 3이라 하면 무슨 타입인지 알기 어렵지만, PrintMedia.Book으로 하면 좀 더 명시적임
+  
+  // 반대로 number를 통해 enum 값의 멤버 이름을 도출할 수 있음
+  let type: string = PrintMedia[3]  // "Book"
   ```
 
 - 별도의 값을 설정할 수도 있음
   
   - 값이 할당되지 않은 아이템은 이전 아이템의 값에 +1 된 값이 설정됨
+  
+  - ```typescript
+    enum PrintMedia {
+        Newspaper = 1,   // 1
+        Newsletter = 50, // 50
+        Magazine = 55,   // 55
+        Book             // 56 (55+1)
+    }
+    ```
 
-- ```typescript
-  enum PrintMedia {
-      Newspaper = 1,   // 1
-      Newsletter = 50, // 50
-      Magazine = 55,   // 55
-      Book             // 56 (55+1)
-  }
-  ```
+- 값은 꼭 숫자이진 않습니다
+  
+  - ```typescript
+    enum LanguageCode = {
+        korean = "ko",
+        english = "en",
+        japanese = "jp",
+        chinese = "zh",
+        spanish = "es"
+    }
+    
+    const languageCode: string = LanguageCode.english  // "en"
+    ```
+
+- `enum`과 `object`의 차이점
+  
+  1. 속성 추가 가능성
+     
+     - `object`는 코드 내에서 새롭게 속성을 자유롭게 추가할 수 있음
+     
+     - `enum`은 선언하고난 뒤 새로운 속성을 추가할 수 없음, 변경 불가
+  
+  2. 속성값 타입
+     
+     - `object`는 javascript가 허용하는 모든 타입이 올 수 있음
+     
+     - `enum`의 속성값에는 문자열, 숫자만 허용됨
+
+### `void`
+
+- 데이터가 없는 경우에 사용됨
+  
+  - 함수가 값을 반환하지 않는 경우
+
+### `never`
+
+- 절대 발생하지 않을 값, 어떤 일이 절대 일어나지 않을 것이라 확신할 때 사용함
+
+- 함수의 리턴 타입
+  
+  - 항상 오류를 리턴
+  
+  - 혹은 리턴 값을 절대로 내보내지 않음 (==무한루프)
+  
+  - ```typescript
+    function throwError(errorMsg: string): never {
+        throw new Error(errorMsg)
+    }
+    
+    
+    function keepProcessing(): never {
+        while (true) {
+            console.log("infinite loop")
+        }
+    }
+    ```
+
+### `void` vs `never`
+
+- `void` 유형은 **undefined, null** 값을 가질 수 있음
+  
+  - 실제로 함수에서 return값이 없는 경우, 암묵적으로 undefined를 리턴함
+  
+  - 따라서 return값이 없는 함수에는 void type을 할당하자.
+
+- `never` 유형은 **어떠한 값도 가질 수 없음**
