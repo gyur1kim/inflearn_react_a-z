@@ -418,3 +418,66 @@ typescript는javascript에서 기본으로 제공하는 기본 제공 유형을 
   - 따라서 return값이 없는 함수에는 void type을 할당하자.
 
 - `never` 유형은 **어떠한 값도 가질 수 없음**
+
+## type annotation, type inference
+
+### type annotation
+
+> 개발자가 타입을 타입스크립트에게 직접 말해주는 것
+> 
+> ```typescript
+> const rate: number = 5;
+> ```
+
+꼭 개발자가 annotation해줘야 하는 경우
+
+1. any 타입을 리턴하는 경우
+   
+   - 함수가 any를 리턴해버리면... 타입스크립트에서 타입을 추론하기 어려워요
+
+2. 변수 선언을 먼저하고 할당을 나중에하는 경우
+   
+   - 할당을 하지 않아서 값을 추론하지 못함
+
+3. 변수에 대입될 값의 타입이 일정하지 않은 경우
+   
+   - 여러 타입이 지정될 때는 `|` 로 여러 타입을 annotation해주자
+
+### type inference
+
+> 타입스크립트가 타입을 추론하는 것
+> 
+> ```typescript
+> const rate = 5;   // 선언과 할당을 동시에 하는 경우 타입을 추론함
+> ```
+
+## type assertion
+
+- 타입 표명
+  
+  - 컴파일러가 추론 및 분석한 타입보다 내가 더 타입을 잘 알고 있어
+  
+  - typescript가 자체적으로 추론할 수 있는 것보다 변수 유형에 대해 더 잘 이해하고 있을 때
+
+- ```typescript
+  interface Foo {
+      bar: number,
+      bas: string
+  }
+  
+  // 에러 발생
+  // 컴파일러는 foo가 속성이 없는 {}라고 추론하기 때문임
+  var foo = {}
+  foo.bar = 123;
+  foo.bas = "123";
+  
+  var foo = {} as Foo;
+  foo.bar = 123;
+  foo.bas = "123";
+  ```
+  
+- `as Foo` vs `<Foo>`
+
+  - 타입 표명은 위의 두 가지 방법으로 사용할 수 있음
+  
+  - 리액트에서는 <Foo> 키워드가 JSX 문법과 겹치므로 `as Foo` 키워드를 사용하자
