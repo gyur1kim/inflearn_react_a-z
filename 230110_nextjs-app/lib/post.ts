@@ -2,13 +2,10 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 
-type PostDataType = {
+export type PostDataType = {
   id: string,
-  content: string,
-  data: {
-    date: string,
-    title: string
-  }
+  date: string,
+  title: string
 }
 const postsDirectory = path.join(process.cwd(), 'posts');
 // process.cwd()의 값
@@ -19,7 +16,7 @@ export function getSortedPostsData() {
   const fileNames = fs.readdirSync(postsDirectory);
   // 결과 : [pre-rendering.md, ssg-ssr.md]
 
-  const allPostsData = fileNames.map((fileName) => {
+  const allPostsData: PostDataType[] = fileNames.map((fileName) => {
     // 파일 이름을 id로 이용하기
     const id = fileName.replace(/\.md$/, '');
     const fullPath = path.join(postsDirectory, fileName);
@@ -42,17 +39,17 @@ export function getSortedPostsData() {
      *   }
      * }
      */
-    const matterResult = matter(fileContents);
+    const matterResult: matter.GrayMatterFile<string> = matter(fileContents);
 
     return {
       id,
-      ...allPostsData(matterResult.data as { date: string; title: string })
+      ...matterResult.data as { date: string; title: string }
     }
   })
 
   // 추출한 posts를 날짜별로 sort하고 return
   return allPostsData.sort((a: PostDataType, b: PostDataType) => {
-    if (a.data.date < b.data.date) return 1
+    if (a.date < b.date) return 1
     else return -1
   })
 }
